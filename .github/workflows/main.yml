@@ -1,0 +1,37 @@
+name: Build FlexiMetronom APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Projekt herunterladen
+        uses: actions/checkout@v4
+
+      - name: Java installieren
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Android SDK einrichten
+        uses: android-actions/setup-android@v3
+
+      - name: Gradle ausführbar machen
+        run: chmod +x gradlew
+
+      - name: APK bauen
+        run: ./gradlew assembleDebug
+
+      - name: APK bereitstellen
+        uses: actions/upload-artifact@v4
+        with:
+          name: FlexiMetronom-debug-apk
+          path: app/build/outputs/apk/debug/*.apk
