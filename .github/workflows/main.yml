@@ -1,4 +1,4 @@
-name: Build FlexiMetronom APK
+name: FlexiMetronom APK erstellen
 
 on:
   workflow_dispatch:
@@ -24,13 +24,13 @@ jobs:
       - name: Android SDK einrichten
         uses: android-actions/setup-android@v3
         with:
-          cmdline-tools-version: 12266719
+          cmdline-tools-version: 11076708
 
-      - name: Gradle ausführbar machen
-        run: chmod +x gradlew
+      - name: Gradle installieren
+        uses: gradle/actions/setup-gradle@v4
 
-      - name: APK bauen
-        run: ./gradlew assembleDebug
+      - name: Android-Projekt bauen
+        run: gradle assembleDebug
 
       - name: APK bereitstellen
         uses: actions/upload-artifact@v4
