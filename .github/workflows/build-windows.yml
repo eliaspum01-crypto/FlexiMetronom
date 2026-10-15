@@ -1,0 +1,30 @@
+name: Build FlexiMetronom Windows EXE
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, master]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@v4
+
+      - name: Python einrichten
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: PyInstaller installieren
+        run: python -m pip install --upgrade pip pyinstaller
+
+      - name: EXE erstellen
+        run: pyinstaller --noconfirm --clean --onefile --windowed --name FlexiMetronom main.py
+
+      - name: EXE zum Download bereitstellen
+        uses: actions/upload-artifact@v4
+        with:
+          name: FlexiMetronom-Windows-EXE
+          path: dist/FlexiMetronom.exe
