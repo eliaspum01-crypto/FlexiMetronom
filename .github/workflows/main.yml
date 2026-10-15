@@ -21,8 +21,10 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Android SDK einrichten
-        uses: android-actions/setup-android@v3
+       - name: Android SDK einrichten
+         uses: android-actions/setup-android@v3
+         with:
+          cmdline-tools-version: 12266719
 
       - name: Gradle ausführbar machen
         run: chmod +x gradlew
